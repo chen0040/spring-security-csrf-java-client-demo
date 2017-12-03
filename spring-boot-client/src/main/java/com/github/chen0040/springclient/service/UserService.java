@@ -57,15 +57,7 @@ public class UserService {
         return singleton;
     }
     
-    private void readCsrfToken(String content){
-        Map<String, String> obj = JSON.parseObject(content, new TypeReference<Map<String, String>>(){});
-        this.csrfToken = obj.get("_csrf.token");
-        this.csrfHeader = obj.get("_csrf.header");
-        this.csrfParameterName = obj.get("_csrf.parameterName");
 
-        logger.info("csrfToken: {}", csrfToken);
-    }
-    
     private void readJSessionCookie(CookieContainer cc){
         if(cc.containsKey("JSESSIONID")){
             jSessionCookie = cc.get("JSESSIONID");
@@ -80,7 +72,6 @@ public class UserService {
                         response -> {
                             
                     if(response.getException()==null){
-                        //readCsrfToken(response.getContent());
                         logger.info("cookie: {}", response.getCookie());
                         readJSessionCookie(response.getCookie());
                         onPingCompleted.accept(Boolean.TRUE);
@@ -141,7 +132,7 @@ public class UserService {
         HttpService.getSingleton().postAsync(getLoginUrl(), authparams, cookies, (response)->{
             if(response.getException() != null){
                 onLoginCompleted.accept(Boolean.FALSE);
-            }else if(response.getContent().startsWith("SAVVY-TRANSCRIBER-AJAX-LOGIN-SUCCESS")){
+            }else if(response.getContent().startsWith("APP-AJAX-LOGIN-SUCCESS")){
                 
                 String[] parts = response.getContent().split(";");
                 this.csrfToken = parts[1];

@@ -64,7 +64,7 @@ public class SpringAuthenticationSuccessHandler extends SavedRequestAwareAuthent
       {
          CsrfToken csrf = (CsrfToken)request.getAttribute(CsrfToken.class
                  .getName());
-         response.getWriter().println("SAVVY-TRANSCRIBER-AJAX-LOGIN-SUCCESS;"+csrf.getToken());
+         response.getWriter().println("APP-AJAX-LOGIN-SUCCESS;"+csrf.getToken());
       }
       else
       {
