@@ -11,6 +11,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+import org.springframework.security.web.csrf.CsrfToken;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
@@ -44,9 +47,32 @@ public class SpringAuthenticationSuccessHandler extends SavedRequestAwareAuthent
       return request.getHeader("user-agent");
    }
 
+
+
    @Override
    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
            throws IOException, ServletException {
+
+
+      String ajax = request.getParameter("ajax");
+
+      String username = authentication.getName();
+
+      System.out.println("User: "+username);
+
+      if(ajax != null && ajax.equalsIgnoreCase("true"))
+      {
+         CsrfToken csrf = (CsrfToken)request.getAttribute(CsrfToken.class
+                 .getName());
+         response.getWriter().println("SAVVY-TRANSCRIBER-AJAX-LOGIN-SUCCESS;"+csrf.getToken());
+      }
+      else
+      {
+         super.onAuthenticationSuccess(request, response, authentication);
+      }
+   }
+
+   /*
       final String userAgent = getUserAgent(request);
       ListenableFuture<String> future = service.submit(() -> {
          ReadableUserAgent ua =  parser.parse(userAgent);
@@ -77,7 +103,7 @@ public class SpringAuthenticationSuccessHandler extends SavedRequestAwareAuthent
       });
 
       super.onAuthenticationSuccess(request, response, authentication);
-   }
+   }*/
 
 
 

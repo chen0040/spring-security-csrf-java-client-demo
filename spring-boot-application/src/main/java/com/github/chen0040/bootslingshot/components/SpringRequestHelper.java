@@ -49,6 +49,7 @@ public class SpringRequestHelper {
 
       CsrfToken csrf = (CsrfToken)request.getAttribute(CsrfToken.class
               .getName());
+      map.put("sessionId", request.getSession().getId());
       logger.info("csrf: {}", csrf.getToken());
       map.put("_csrf.token", csrf.getToken());
       map.put("_csrf.header", csrf.getHeaderName());
