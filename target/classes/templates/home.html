@@ -11,6 +11,10 @@
 
 <body>
 
+<div sec:authorize="!isAuthenticated()" >
+
+</div>
+
 <div sec:authorize="hasRole('ROLE_ADMIN')">
 
     <nav class="navbar navbar-default navbar-fixed-top" ng-controller="adminNavController as nav">

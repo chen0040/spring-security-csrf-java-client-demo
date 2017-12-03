@@ -2,17 +2,7 @@
 
 slingshot project with spring boot and spring security and spring data jpa as well as elastic search using jest
 
-# Feature
-
-* Embedded tomcat server
-* Spring Data JPA and Spring Security for Authentication
-* Spring Data JPA configuration for database
-* Jest for ElasticSearch
-* Websocket + sockjs + stompjs
-* Bootstrap + thymeleaf
-* Language (cn + en)
-
-# Configuration
+# Setup
 
 To use this project create a database named spring_boot_slingshot in your mysql database (make sure it is running at localhost:3306)
 
@@ -27,11 +17,7 @@ Note that the default username and password for the mysql is configured to
 
 If your mysql or mariadb does not use these configuration, please change the settings in src/resources/config/application-default.properties
 
-# Usage
-
-This is just a template project that provides slingshot. Just use it as the starting point for your spring boot project development.
-
-Note that the application will generate two accounts in the database on startup if they don't exist:
+The application will generate two accounts in the database on startup if they don't exist:
 
 ADMIN:
 
@@ -42,6 +28,25 @@ DEMO:
 
 * username: demo
 * password: demo
+
+For the spring security configuration, the CSRF is enabled.
+
+# Usage
+
+### Build the applications
+
+Run the "./make.ps1" (windows environment) and "./make.sh" (unix environment). which will compile and stores the built
+jars in the "bin" folder.
+
+* spring-boot-application: the spring boot application that has csrf-enabled spring security configuration
+* desktop-client: a simple swing desktop application that login the spring boot application using web api
+
+
+
+
+
+
+
 
 
 

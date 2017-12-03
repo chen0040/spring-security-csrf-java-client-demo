@@ -70,9 +70,7 @@ public class WebApiController {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             SpringIdentity identity = new SpringIdentity(username, true);
 
-
-
-            //identity.getTokenInfo().putAll(requestHelper.getTokenInfo(request));
+            identity.getTokenInfo().putAll(requestHelper.getTokenInfo(request));
 
             return identity;
         } else {
