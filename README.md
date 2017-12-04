@@ -29,7 +29,12 @@ DEMO:
 * username: demo
 * password: demo
 
-For the spring security configuration, the CSRF is enabled.
+For the spring security configuration, the CSRF is enabled. The configuration in the spring-boot-application as follows:
+
+```java
+.csrf()
+.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+```
 
 # Usage
 
@@ -39,7 +44,27 @@ Run the "./make.ps1" (windows environment) and "./make.sh" (unix environment). w
 jars in the "bin" folder.
 
 * spring-boot-application: the spring boot application that has csrf-enabled spring security configuration
-* desktop-client: a simple swing desktop application that login the spring boot application using web api
+* spring-boot-client: a java client that can login the spring-boot-application via restful web api.
+* spring-boot-client-sample-app: a sample swing application that uses the spring-boot-client to login to the spring-boot-application
+
+### Use spring-boot-client in your project:
+
+The following are the excerpt from spring-boot-client unit test to show how to login to the spring-boot-application:
+
+```java
+String username = "admin";
+String password = "admin";
+UrlService.setProtocolName("http");
+UrlService.setDomainName("localhost:8080");
+UserService.getSingleton().login(username, password, (success)->{
+    if(success){
+        System.out.println("user successfully login");
+    }else{
+        Exception ex = ScopeService.getSingleton().getLastException();
+        if(ex != null) ex.printStackTrace();
+    }
+});
+```
 
 
 
