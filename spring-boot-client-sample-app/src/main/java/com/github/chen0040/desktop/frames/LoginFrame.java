@@ -1,8 +1,7 @@
 package com.github.chen0040.desktop.frames;
 
 import com.github.chen0040.desktop.models.SpringIdentity;
-import com.github.chen0040.desktop.services.AccountService;
-import com.github.chen0040.desktop.utils.StringUtils;
+import com.github.chen0040.springclient.service.UserService;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,9 +15,9 @@ public class LoginFrame  extends JFrame implements ActionListener
     JPanel panel;
     JLabel lblUsername, lblPassword;
     final JTextField txtUsername, txtPassword;
-    private Consumer<SpringIdentity> onAuthentication;
+    private Consumer<Boolean> onAuthentication;
 
-    public void setOnAuthentication(Consumer<SpringIdentity> callback) {
+    public void setOnAuthentication(Consumer<Boolean> callback) {
         this.onAuthentication = callback;
     }
 
@@ -50,7 +49,7 @@ public class LoginFrame  extends JFrame implements ActionListener
         this.setLocationRelativeTo(null);
     }
 
-    public void authenticate(Consumer<SpringIdentity> callback) {
+    public void authenticate(Consumer<Boolean> callback) {
         txtUsername.setText("admin");
         txtPassword.setText("admin");
 
@@ -64,9 +63,9 @@ public class LoginFrame  extends JFrame implements ActionListener
         String username = txtUsername.getText();
         String password = txtPassword.getText();
 
-        AccountService.getInstance().authenticate(username, password, account -> {
+        UserService.getSingleton().login(username, password, authenticated -> {
             setVisible(false);
-            onAuthentication.accept(account);
+            onAuthentication.accept(authenticated);
         });
     }
 }

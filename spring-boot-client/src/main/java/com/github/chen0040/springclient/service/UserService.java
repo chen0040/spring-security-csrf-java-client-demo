@@ -28,6 +28,7 @@ public class UserService {
     private String csrfParameterName;
     private String csrfHeader;
     private Cookie jSessionCookie;
+    private boolean authenticated;
     private final static Logger logger = LoggerFactory.getLogger(UserService.class);
     
     private String getPingAjaxUrl(){
@@ -56,7 +57,10 @@ public class UserService {
         }
         return singleton;
     }
-    
+
+    public boolean isAuthenticated() {
+        return authenticated;
+    }
 
     private void readJSessionCookie(CookieContainer cc){
         if(cc.containsKey("JSESSIONID")){
@@ -117,6 +121,7 @@ public class UserService {
         }
         cookies.add(new Cookie("XSRF-TOKEN", csrfToken));
     }
+
     
     private void _login(String username, String password, Consumer<Boolean> onLoginCompleted){
         Map<String, String> authparams =new HashMap<String, String>();
@@ -136,6 +141,7 @@ public class UserService {
                 
                 String[] parts = response.getContent().split(";");
                 this.csrfToken = parts[1];
+                this.authenticated = true;
                 this.readJSessionCookie(response.getCookie());
                 onLoginCompleted.accept(Boolean.TRUE);
             }else {

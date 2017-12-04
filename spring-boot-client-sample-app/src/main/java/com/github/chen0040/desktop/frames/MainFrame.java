@@ -1,19 +1,17 @@
 package com.github.chen0040.desktop.frames;
 
 
-import com.github.chen0040.desktop.services.AccountService;
+import com.github.chen0040.springclient.service.UserService;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
 
-import static com.github.chen0040.desktop.services.AccountService.*;
-
 public class MainFrame extends JFrame {
     private JLabel statusLabel;
 
     public MainFrame() {
-        super("WhizHome Image Batch Processor");
+        super("Spring Security ");
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -45,7 +43,8 @@ public class MainFrame extends JFrame {
 
     public void run(){
 
-        if(getInstance().isAuthenticated()) {
+
+        if(UserService.getSingleton().isAuthenticated()) {
             loadContent();
         } else {
             LoginFrame loginFrame = new LoginFrame();
