@@ -1,7 +1,7 @@
 package com.github.chen0040.desktop.frames;
 
 
-import com.github.chen0040.springclient.service.UserService;
+import com.github.chen0040.springclient.service.SpringBootClient;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -44,7 +44,7 @@ public class MainFrame extends JFrame {
     public void run(){
 
 
-        if(UserService.getSingleton().isAuthenticated()) {
+        if(SpringBootClient.getSingleton().isAuthenticated()) {
             loadContent();
         } else {
             LoginFrame loginFrame = new LoginFrame();

@@ -121,15 +121,13 @@ The following are the excerpt from spring-boot-client unit test to show how to l
 ```java
 String username = "admin";
 String password = "admin";
-UrlService.setProtocolName("http");
-UrlService.setDomainName("localhost:8080");
-UserService.getSingleton().login(username, password, (success)->{
-    if(success){
+SpringBootClient.getSingleton().setBaseUrl("http://localhost:8080");
+SpringBootClient.getSingleton().login(username, password, (authenticationResult)->{
+
+    if(authenticationResult.isAuthenticated()){
         System.out.println("user successfully login");
-    }else{
-        Exception ex = ScopeService.getSingleton().getLastException();
-        if(ex != null) ex.printStackTrace();
     }
+    assertThat(authenticationResult.isAuthenticated()).isTrue();
 });
 ```
 

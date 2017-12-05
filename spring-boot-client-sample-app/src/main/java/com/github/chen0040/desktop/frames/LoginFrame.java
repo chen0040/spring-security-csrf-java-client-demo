@@ -1,7 +1,6 @@
 package com.github.chen0040.desktop.frames;
 
-import com.github.chen0040.desktop.models.SpringIdentity;
-import com.github.chen0040.springclient.service.UserService;
+import com.github.chen0040.springclient.service.SpringBootClient;
 
 import javax.swing.*;
 import java.awt.*;
@@ -63,7 +62,7 @@ public class LoginFrame  extends JFrame implements ActionListener
         String username = txtUsername.getText();
         String password = txtPassword.getText();
 
-        UserService.getSingleton().login(username, password, authenticated -> {
+        SpringBootClient.getSingleton().login(username, password, authenticated -> {
             setVisible(false);
             onAuthentication.accept(authenticated);
         });
