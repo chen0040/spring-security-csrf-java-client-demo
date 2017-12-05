@@ -19,29 +19,7 @@ import java.util.*;
 @Component
 public class SpringRequestHelper {
 
-   private static final List<String> supportedLanguages = Arrays.asList("en", "cn");
    private static final Logger logger = LoggerFactory.getLogger(SpringRequestHelper.class);
-
-   @Autowired
-   private LocaleResolver localeResolver;
-
-   public String getUserIpAddress(HttpServletRequest request) {
-      String ipAddress = request.getHeader("X-FORWARDED-FOR");
-      if (ipAddress == null) {
-         ipAddress = request.getRemoteAddr();
-      }
-      return ipAddress;
-   }
-
-   public String getLanguage(HttpServletRequest request) {
-      Locale locale = RequestContextUtils.getLocale(request);
-      String language = locale.getLanguage();
-      if(!supportedLanguages.contains(language)){
-         language = "en";
-      }
-
-      return language;
-   }
 
    public Map<String, String> getTokenInfo(HttpServletRequest request) {
       Map<String, String> map = new HashMap<>();
@@ -49,7 +27,6 @@ public class SpringRequestHelper {
 
       CsrfToken csrf = (CsrfToken)request.getAttribute(CsrfToken.class
               .getName());
-      map.put("sessionId", request.getSession().getId());
       logger.info("csrf: {}", csrf.getToken());
       map.put("_csrf.token", csrf.getToken());
       map.put("_csrf.header", csrf.getHeaderName());

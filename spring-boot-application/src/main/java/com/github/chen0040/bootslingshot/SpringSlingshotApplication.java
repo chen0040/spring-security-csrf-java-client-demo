@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * Created by xschen on 13/9/2017.
  */
 @SpringBootApplication
-@EnableScheduling
 @EnableTransactionManagement
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SpringSlingshotApplication {
