@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.testng.Assert.assertTrue;
 
 public class LoginUnitTest {
 
@@ -22,7 +23,10 @@ public class LoginUnitTest {
                 System.out.println("user successfully login");
             }
             assertThat(authenticationResult.isAuthenticated()).isTrue();
+            assertTrue(SpringBootClient.getSingleton().isAuthenticated());
+            assertThat(SpringBootClient.getSingleton().getToken()).isNotEmpty();
         });
+
 
     }
 

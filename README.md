@@ -127,8 +127,9 @@ SpringBootClient.getSingleton().login(username, password, (authenticationResult)
     if(authenticationResult.isAuthenticated()){
         System.out.println("user successfully login");
     }
-    assertThat(authenticationResult.isAuthenticated()).isTrue();
 });
+SpringBootClient.getSingleton().isAuthenticated();
+SpringBootClient.getSingleton().getToken();
 ```
 
 
