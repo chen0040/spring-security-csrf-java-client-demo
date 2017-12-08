@@ -1,6 +1,6 @@
-# spring-boot-slingshot
+# spring-security-csrf-restful-login-api-demo
 
-slingshot project with spring boot and spring security and spring data jpa as well as elastic search using jest
+This project contains demo codes on how to facilitate communication between a normal desktop java application and a spring boot web application that has spring security enabled.
 
 # Setup
 
