@@ -1,6 +1,7 @@
 package com.github.chen0040.desktop.frames;
 
 import com.github.chen0040.springclient.service.SpringBootClient;
+import com.github.chen0040.springclient.utils.AuthenticationResult;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,9 +15,9 @@ public class LoginFrame  extends JFrame implements ActionListener
     JPanel panel;
     JLabel lblUsername, lblPassword;
     final JTextField txtUsername, txtPassword;
-    private Consumer<Boolean> onAuthentication;
+    private Consumer<AuthenticationResult> onAuthentication;
 
-    public void setOnAuthentication(Consumer<Boolean> callback) {
+    public void setOnAuthentication(Consumer<AuthenticationResult> callback) {
         this.onAuthentication = callback;
     }
 
@@ -48,7 +49,7 @@ public class LoginFrame  extends JFrame implements ActionListener
         this.setLocationRelativeTo(null);
     }
 
-    public void authenticate(Consumer<Boolean> callback) {
+    public void authenticate(Consumer<AuthenticationResult> callback) {
         txtUsername.setText("admin");
         txtPassword.setText("admin");
 
@@ -62,9 +63,9 @@ public class LoginFrame  extends JFrame implements ActionListener
         String username = txtUsername.getText();
         String password = txtPassword.getText();
 
-        SpringBootClient.getSingleton().login(username, password, authenticated -> {
+        SpringBootClient.getSingleton().login(username, password, authenticationResult -> {
             setVisible(false);
-            onAuthentication.accept(authenticated);
+            onAuthentication.accept(authenticationResult);
         });
     }
 }
